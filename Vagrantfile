@@ -7,18 +7,46 @@
 # you're doing.
 
 
+# ====== hyberv ==========#
+# Vagrant.configure("2") do |config|
+#   config.vm.box = "gusztavvargadr/ubuntu-desktop-2204-lts"
+#   # config.vm.box_version = "2204.0.2409"
+ 
+#   config.vm.provider "hyperv" do |h|
+
+#     h.memory = 2048  # Set memory
+#     h.cpus = 2       # Set CPU count
+#     h.vmname  = "host"
+#   end
+# end
+# ====== hyberv ==========#
+
+
+# ====== vmware for mac ==========#
+# 1- install 2.4.1 vagrant version
+# 2- install this below:
+# brew install --cask vagrant-vmware-utility
+# vagrant plugin install vagrant-vmware-desktop
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "gusztavvargadr/ubuntu-desktop-2204-lts"
-  # config.vm.box_version = "2204.0.2409"
- 
-  config.vm.provider "hyperv" do |h|
+  # headless 
+  # config.vm.box = "gyptazy/ubuntu22.04-arm64"
 
-    h.memory = 2048  # Set memory
-    h.cpus = 2       # Set CPU count
+  # Desktop
+  config.vm.box = "gusztavvargadr/ubuntu-desktop-2204-lts"
+
+  config.vm.provider "vmware_desktop" do |v|
+    v.memory = 1024  
+    v.cpus = 1
+    v.gui=false
     h.vmname  = "host"
+
   end
+  
 end
+# ====== vmware for mac ==========#
+
+
 
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
