@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
       smb_username: ENV['SMB_USERNAME'],
       smb_password: ENV['SMB_PASSWORD']
 
-    config.vm.provision "shell", path: "install_ansible.sh"
+    controller_config.vm.provision "shell", path: "install_ansible.sh"
   end
   # vm conroller ========================= #
 
@@ -51,7 +51,7 @@ Vagrant.configure("2") do |config|
       smb_username: ENV['SMB_USERNAME'],
       smb_password: ENV['SMB_PASSWORD']
 
-    config.vm.provision "shell", path: "UpdateUpgrade.sh"
+    guest1_config.vm.provision "shell", path: "UpdateUpgrade.sh"
   end
   # vm guest 1 ========================= #
 
@@ -73,7 +73,7 @@ Vagrant.configure("2") do |config|
       smb_username: ENV['SMB_USERNAME'],
       smb_password: ENV['SMB_PASSWORD']
 
-    config.vm.provision "shell", path: "UpdateUpgrade.sh"
+    guest2_config.vm.provision "shell", path: "UpdateUpgrade.sh"
   end
   # vm guest 2 ========================= #
 
