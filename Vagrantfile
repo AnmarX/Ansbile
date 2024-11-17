@@ -1,6 +1,8 @@
 # require 'dotenv'
 # vagrant plugin install dotenv
 
+# copy folders
+# scp install_ansible.sh vagrant@<vm-ip>:/home/vagrant/
 
 
 # ====== hyberv on win ==========#
