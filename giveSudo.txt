@@ -1,0 +1,15 @@
+
+# sudo 
+su root 
+nano /etc/sudoers
+
+<user_name> ALL=(ALL)  ALL
+# or
+<user_name> ALL=(ALL:ALL)  ALL
+
+
+
+# copy folders
+scp install_ansible.sh vagrant@<vm-ip>:/home/vagrant/
+
+scp vagrant@<vm-ip>:/home/vagrant/install_ansible.sh /path/to/local/destination/
