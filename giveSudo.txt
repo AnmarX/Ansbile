@@ -44,3 +44,12 @@ sudo shutdown -h now
 #path
 etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
 
+
+
+
+
+# the ssh step to copy the ssh public key from the controller
+# to the guests is only to do $ ssh guest1@192.168.56.103 from the controller
+# by default you can ssh from the local host to all VMs but if you want to ssh from a VM to another VM you do this step
+# but in virtual box you can do 2 adpaters you can do host-only adpaters for all VMs to communicate with each other
+# and NAT adapter for external network
