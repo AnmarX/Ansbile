@@ -4,7 +4,7 @@ su root
 nano /etc/sudoers
 
 <user_name> ALL=(ALL)  ALL
-# orr
+# or
 <user_name> ALL=(ALL:ALL)  ALL
 
 
