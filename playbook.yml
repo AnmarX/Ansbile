@@ -1,0 +1,43 @@
+---
+# This playbook installs and configures Nginx on web servers.
+
+- name: Install and configure Nginx on web servers  # Descriptive name for the playbook
+  hosts: webserver                                  # Target group of servers from the inventory
+  become: yes                                       # Use elevated privileges (e.g., sudo)
+  tasks:                                            # List of tasks to execute
+
+    # Task 1: Update the package cache
+    - name: Update apt cache                        # Descriptive name for the task
+      apt:                                          # Use the apt module (for Debian/Ubuntu systems)
+        update_cache: yes                           # Refresh the package cache
+
+    # Task 2: Install Nginx
+    - name: Install Nginx                           # Descriptive name for installing Nginx
+      apt:                                          # Use the apt module
+        name: nginx                                 # Specify the package name to install
+        state: present                              # Ensure the package is installed
+
+    # Task 3: Start and enable the Nginx service
+    - name: Ensure Nginx is running and enabled     # Descriptive name for service management
+      service:                                      # Use the service module
+        name: nginx                                 # Target the Nginx service
+        state: started                              # Ensure the service is running
+        enabled: true                               # Enable the service to start on boot
+
+    # Task 4: Deploy a custom index.html file
+    - name: Create a custom index.html              # Descriptive name for deploying the HTML file
+      copy:                                         # Use the copy module
+        dest: /var/www/html/index.html              # Destination path for the file
+        content: |                                  # Provide inline content for the file
+          <html>
+          <head>
+              <title>Welcome</title>
+          </head>
+          <body>
+              <h1>Welcome to Nginx!</h1>
+              <p>This page is managed by Ansible.</p>
+          </body>
+          </html>
+        owner: www-data                             # Set the file owner to 'www-data'
+        group: www-data                             # Set the file group to 'www-data'
+        mode: 0644                                  # Set file permissions to readable by all
