@@ -3,14 +3,23 @@
   become: yes                                       # Use elevated privileges (e.g., sudo)
   tasks:                                            # List of tasks to execute
 
-    - name: Copy and Execute the script 
-      script: /home/host/Ansbile_new_project/Ansbile/UpdateUpgrade.sh
-
+    #- name: Copy and Execute the script 
+    #script: /home/host/Ansbile_new_project/Ansbile/UpdateUpgrade.sh
+  
     # Task 1: Update the package cache
     #- name: Update apt cache                        # Descriptive name for the task
     #apt:                                          # Use the apt module (for Debian/Ubuntu systems)
     #   update_cache: yes                           # Refresh the package cache
+    
+    #- name: Update the package cache                         # Refresh the package cache
+    # apt:
+    #   update_cache: yes
 
+    # Task 2: Upgrade all installed packages
+    #- name: Upgrade all packages                             # Perform a full system upgrade
+    # apt:
+    #   upgrade: full
+    
     # Task 2: Install Nginx
     - name: Install Nginx                           # Descriptive name for installing Nginx
       apt:                                          # Use the apt module
