@@ -1,0 +1,38 @@
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+
+
+-   state: present:
+        Ensures the nginx package is installed.
+        If the package is not installed, it will install it.
+        If the package is already installed, it does nothing (idempotent).
+
+-   Other possible state values for the apt module:
+        absent: Ensures the package is uninstalled.
+        latest: Ensures the package is installed and updated to the latest version.
+
+
+
+
+
+- name: Ensure Nginx is running and enabled
+  service:
+    name: nginx
+    state: started
+    enabled: true
+
+-   state: started:
+        Ensures the service is running. If it’s stopped, Ansible will start it.
+        If the service is already running, it does nothing (idempotent).
+
+-   enabled: true:
+        Ensures the service is enabled to start automatically on boot.
+
+
+-   Other possible state values for the service module:
+        started: Ensures the service is running.
+        stopped: Ensures the service is stopped.
+        restarted: Restarts the service (always triggers a restart).
+        reloaded: Reloads the service configuration without stopping it (if supported by the service).
