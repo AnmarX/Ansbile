@@ -1,0 +1,30 @@
+# Update and install Git (if not already installed)
+sudo apt update && sudo apt install -y git 
+
+# Configure Git username and email
+git config --global user.name "Your Name" 
+git config --global user.email "your-email@example.com" 
+
+git config --global init.defaultBranch main
+
+git config --global --list
+
+# remove config from github
+
+git config --global --unset <name of the config>
+
+
+# Start the SSH agent
+eval "$(ssh-agent -s)" 
+
+# Add the RSA private key to the SSH agent
+ssh-add ~/.ssh/id_rsa 
+
+# Add the RSA public key to the SSH on GitHub
+cat the public key and paste it on github
+
+# Display the public key so it can be added to GitHub
+echo "Your public key is:" && cat ~/.ssh/id_rsa.pub 
+
+# Test SSH connection to GitHub
+ssh -T git@github.com
