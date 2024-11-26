@@ -53,3 +53,16 @@ etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
 # by default you can ssh from the local host to all VMs but if you want to ssh from a VM to another VM you do this step
 # but in virtual box you can do 2 adpaters you can do host-only adpaters for all VMs to communicate with each other
 # and NAT adapter for external network
+
+
+# how to run ansible
+
+# what i have used 
+$ ansible-playbook -i hosts.txt playbook.yml -kK
+
+$ ansible-playbook mail.yml -kK 
+  SSH password: 
+  BECOME password[defaults to SSH password]: 
+  
+-k, --ask-pass: ask for connection password
+-K, --ask-become-pass: ask for privilege escalation password
