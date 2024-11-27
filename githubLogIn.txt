@@ -28,3 +28,21 @@ echo "Your public key is:" && cat ~/.ssh/id_rsa.pub
 
 # Test SSH connection to GitHub
 ssh -T git@github.com
+
+
+#steps
+git config --global user.name "Your Name" 
+git config --global user.email "your-email@example.com" 
+
+git config --global init.defaultBranch main
+
+git config --global --list
+
+git clone <url of the repo>
+git status
+
+git add <filename>
+git commit -m "<Comment>"
+git push origin main
+
+git remote set-url origin https://<token>@github.com/<username>/<repo>
