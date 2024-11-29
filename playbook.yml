@@ -6,11 +6,7 @@
     #- name: Copy and Execute the script 
     #script: /home/host/Ansbile_new_project/Ansbile/UpdateUpgrade.sh
   
-    # Task 1: Update the package cache
-    #- name: Update apt cache                        # Descriptive name for the task
-    #apt:                                          # Use the apt module (for Debian/Ubuntu systems)
-    #   update_cache: yes                           # Refresh the package cache
-    
+    # Task 1: Update the package cache    
     #- name: Update the package cache                         # Refresh the package cache
     # apt:
     #   update_cache: yes
@@ -19,6 +15,10 @@
     #- name: Upgrade all packages                             # Perform a full system upgrade
     # apt:
     #   upgrade: full
+
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
     
     # Task 2: Install Nginx
     - name: Install Nginx                           # Descriptive name for installing Nginx
@@ -32,6 +32,60 @@
         name: nginx                                 # Target the Nginx service
         state: started                              # Ensure the service is running
         enabled: true  
+
+
+    # Task 1: Install prerequisite packages
+   
+    - name: Install prerequisite packages for docker
+      apt:
+        name:
+          - ca-certificates
+          - curl
+        # Ensure Existence for present
+        state: present
+
+    # Task 2: Create directory for keyrings
+    - name: Create directory for keyrings
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    # Task 3: Download Docker GPG key
+    - name: Download Docker GPG key
+      get_url:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: '0644'
+
+  # Task 4: Add Docker repository
+    - name: Add Docker repository
+      copy:
+        content: |
+          deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+          $(lsb_release -cs) stable
+        dest: /etc/apt/sources.list.d/docker.list
+        mode: '0644'
+
+
+
+    # Task 5: Update apt package cache
+    # sudo apt-get update
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+
+    # Task 6: Install Docker Engine and related components
+    # sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    - name: Install Docker Engine and related components
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
 
 
 
