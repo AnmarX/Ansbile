@@ -60,12 +60,10 @@
 
   # Task 4: Add Docker repository
     - name: Add Docker repository
-      copy:
-        content: |
-          deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-          $(lsb_release -cs) stable
-        dest: /etc/apt/sources.list.d/docker.list
-        mode: '0644'
+      apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+        filename: docker
+        state: present
 
 
 
