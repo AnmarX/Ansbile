@@ -1,0 +1,5 @@
+- name: Run Docker Hello World
+  hosts: webserver
+  tasks:
+    - name: Run Docker Hello World
+      command: docker run hello-world

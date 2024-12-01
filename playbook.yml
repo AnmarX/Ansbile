@@ -1,6 +1,9 @@
 - name: Install and configure Nginx on web servers  # Descriptive name for the playbook
   hosts: webserver                                  # Target group of servers from the inventory
   become: yes                                       # Use elevated privileges (e.g., sudo)
+  vars_files:
+    - vars.yml
+    
   tasks:                                            # List of tasks to execute
 
     #- name: Copy and Execute the script 
@@ -84,6 +87,19 @@
           - docker-buildx-plugin
           - docker-compose-plugin
         state: present
+
+
+    # - name: Add user to the docker group
+    #   user:
+    #     name: "{{ your_username }}"
+    #     groups: docker
+    #     append: yes
+
+
+    # - name: Run Docker Hello World
+    #   command: docker run hello-world
+
+
 
 
 
