@@ -6,7 +6,7 @@
   tasks:
     - name: Add user to docker group
       user:
-        name: "{{ guest1 }}"
+        name: "{{ your_username }}"
         groups: docker
         append: yes
 
