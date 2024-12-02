@@ -48,13 +48,13 @@
         - /etc/apt/keyrings/docker.asc
 
     # Task 6: Remove Docker group (optional)
-    - name: Remove Docker group
-      group:
-        name: docker
-        state: absent
+    # - name: Remove Docker group
+    #   group:
+    #     name: docker
+    #     state: absent
 
     # Task 7: Clean up package cache
-    - name: Clean up package cache
-      apt:
-        autoclean: yes
-        autoremove: yes
+    # - name: Clean up package cache
+    #   apt:
+    #     autoclean: yes
+    #     autoremove: yes
