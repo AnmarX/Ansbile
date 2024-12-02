@@ -1,3 +1,20 @@
+# Add Docker's official GPG key:
+# sudo apt-get update
+# sudo apt-get install ca-certificates curl
+# sudo install -m 0755 -d /etc/apt/keyrings
+# sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+# sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# # Add the repository to Apt sources:
+# echo \
+#   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+#   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+#   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+# sudo apt-get update
+
+
+# sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
 - name: Install and configure Nginx on web servers  # Descriptive name for the playbook
   hosts: webserver                                  # Target group of servers from the inventory
   become: yes                                       # Use elevated privileges (e.g., sudo)
@@ -5,19 +22,6 @@
     - vars.yml
     
   tasks:                                            # List of tasks to execute
-
-    #- name: Copy and Execute the script 
-    #script: /home/host/Ansbile_new_project/Ansbile/UpdateUpgrade.sh
-  
-    # Task 1: Update the package cache    
-    #- name: Update the package cache                         # Refresh the package cache
-    # apt:
-    #   update_cache: yes
-
-    # Task 2: Upgrade all installed packages
-    #- name: Upgrade all packages                             # Perform a full system upgrade
-    # apt:
-    #   upgrade: full
 
 
     - name: Update and upgrade all packages to the latest version
