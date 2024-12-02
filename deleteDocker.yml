@@ -1,0 +1,55 @@
+- name: Uninstall Docker from web servers
+  hosts: webserver
+  become: yes
+  tasks:
+    # Task 1: Stop all Docker containers
+    - name: Stop all Docker containers
+      shell: |
+        docker ps -q | xargs -r docker stop
+      ignore_errors: true
+
+    # Task 2: Remove all Docker containers
+    - name: Remove all Docker containers
+      shell: |
+        docker ps -a -q | xargs -r docker rm
+      ignore_errors: true
+
+    # Task 3: Uninstall Docker packages
+    - name: Remove Docker packages
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: absent
+
+    # Task 4: Remove Docker repository
+    - name: Remove Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu jammy stable"
+        state: absent
+
+    # Task 5: Remove Docker-related files and directories
+    - name: Remove Docker data and configurations
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /var/lib/docker
+        - /etc/docker
+        - /etc/apt/keyrings/docker.gpg
+        - /etc/apt/keyrings/docker.asc
+
+    # Task 6: Remove Docker group (optional)
+    - name: Remove Docker group
+      group:
+        name: docker
+        state: absent
+
+    # Task 7: Clean up package cache
+    - name: Clean up package cache
+      apt:
+        autoclean: yes
+        autoremove: yes
