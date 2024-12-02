@@ -26,14 +26,11 @@
         state: absent
 
     # Task 4: Remove Docker repository
-    - name: Add Docker repository
+    - name: Remove Docker repository
       apt_repository:
-        repo: >-
-          deb [arch=amd64
-          signed-by=/etc/apt/keyrings/docker.gpg]
-          https://download.docker.com/linux/ubuntu jammy stable
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu jammy stable"
         filename: docker
-        state: present
+        state: absent
 
     # Task 5: Remove Docker-related files and directories
     - name: Remove Docker data and configurations
