@@ -19,6 +19,7 @@
     # apt:
     #   upgrade: full
 
+
     - name: Update apt package cache
       apt:
         update_cache: yes
@@ -61,12 +62,13 @@
         dest: /etc/apt/keyrings/docker.asc
         mode: '0644'
 
-  # Task 4: Add Docker repository
+  #Task 4: Add Docker repository
     - name: Add Docker repository
       apt_repository:
-        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu jammy stable"
         filename: docker
         state: present
+  
 
 
 
