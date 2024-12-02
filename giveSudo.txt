@@ -70,4 +70,4 @@ $ ansible-playbook mail.yml -kK
 
 # how to ping
 # -m stand for module
-ansible <name of the service> -m ping <inventory file>
+ansible <name of the service> -m ping -i <inventory file>
