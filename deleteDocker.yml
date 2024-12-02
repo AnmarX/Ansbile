@@ -54,7 +54,7 @@
     #     state: absent
 
     # Task 7: Clean up package cache
-    # - name: Clean up package cache
-    #   apt:
-    #     autoclean: yes
-    #     autoremove: yes
+    - name: Clean up package cache
+      apt:
+        autoclean: yes
+        autoremove: yes
