@@ -113,15 +113,24 @@
         state: present
 
 
-    # - name: Add user to the docker group
-    #   user:
-    #     name: "{{ your_username }}"
-    #     groups: docker
-    #     append: yes
+    - name: Add user to Docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: true
 
 
-    # - name: Run Docker Hello World
-    #   command: docker run hello-world
+    - name: Enable and start Docker services
+      systemd:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      loop:
+        - docker.service
+        - containerd.service
+
+
+   
 
 
 

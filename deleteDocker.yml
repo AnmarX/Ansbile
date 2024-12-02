@@ -27,6 +27,19 @@
         - docker-buildx-plugin
         - docker-compose-plugin
 
+    # Task 1: Purge Docker and related components
+    - name: Purge Docker packages
+      apt:
+        name:
+          - docker-engine
+          - docker
+          - docker.io
+          - docker-ce
+          - docker-ce-cli
+          - docker-compose-plugin
+        state: absent
+        purge: yes  # Ensures configurations are also removed
+
     # Task 4: Remove Docker repository
     - name: Remove Docker repository
       apt_repository:
