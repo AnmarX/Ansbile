@@ -50,7 +50,7 @@
         state: present
 
     - name: Install Docker and related packages
-      ansible.builtin.apt:
+      apt:
         name: "{{ item }}"
         state: present
         update_cache: true
