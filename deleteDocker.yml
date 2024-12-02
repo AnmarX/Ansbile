@@ -15,17 +15,17 @@
       ignore_errors: true
 
     # Task 3: Uninstall Docker packages
-    # - name: Remove Docker packages
-    #   apt:
-    #     name: "{{ item }}"
-    #     state: absent
-    #     update_cache: true
-    #   loop:
-    #     - docker-ce
-    #     - docker-ce-cli
-    #     - containerd.io
-    #     - docker-buildx-plugin
-    #     - docker-compose-plugin
+    - name: Remove Docker packages
+      apt:
+        name: "{{ item }}"
+        state: absent
+        update_cache: true
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-buildx-plugin
+        - docker-compose-plugin
 
     # Task 4: Remove Docker repository
     - name: Remove Docker repository
