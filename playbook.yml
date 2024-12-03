@@ -78,6 +78,10 @@
         state: present
 
 
+    - name: fix time
+      command: sudo hwclock --hctosys 
+
+        
   #Task 4: Add Docker repository
     - name: Add Docker repository
       apt_repository:
