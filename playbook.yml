@@ -91,6 +91,10 @@
         name: "{{ ansible_user }}"
         groups: docker
         append: true
+    
+    - name: Print architecture variables
+      debug:
+        msg: "user {{ansible_user}}"
 
     # Task 12: Enable and start Docker services
     - name: Enable and start Docker services
