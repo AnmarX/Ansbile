@@ -12,7 +12,13 @@
         upgrade: yes
         # So it's good to include if you don't want to update the cache when it has only recently been updated.
         # 1 hour
-        cache_valid_time: 3600
+        cache_valid_time: 86400
+      ignore_errors: yes
+
+    - name: Update apt with specific options
+      command:
+        cmd: apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update
+     
 
     - name: create file to install on
       file: 
