@@ -13,3 +13,26 @@
         # So it's good to include if you don't want to update the cache when it has only recently been updated.
         # 1 hour
         cache_valid_time: 3600
+
+    - name: create file to install on
+      file: 
+        path: "/opt/software/"
+        state: directory
+        # Read (r), Write (w), Execute (x)
+        # Read (r): Can view the files in the directory.
+        # Write (w): Can create or modify files.
+        # Execute (x): Can enter (cd) the directory.
+        # 1- Owner (User) (7)
+        # 2- Group (5)
+        # 3- Others (5)
+        mode: '0755'
+    
+    - name: download jdk
+      get_url:
+        url: https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
+        dest: "/opt/software/jdk-23_linux-x64_bin.deb"
+        headers:
+          Cookie: "oraclelicense=accept-securebackup-cookie"
+        validate_certs: false
+        checksum: "sha256:1db5362bab76800022cffb22bec4d6597975e34a53c834d8a4874b0b284491a4"
+        
