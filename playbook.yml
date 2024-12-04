@@ -15,6 +15,12 @@
 
 # sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
+
+
+#to check docer is running
+#sudo systemctl status docker
+
+
 - name: Install and configure Nginx on web servers  # Descriptive name for the playbook
   hosts: webserver                                  # Target group of servers from the inventory
   become: yes                                       # Use elevated privileges (e.g., sudo)
@@ -126,6 +132,10 @@
         name: "{{ ansible_user }}"
         groups: docker
         append: true
+
+    - name: Print user
+      debug:
+        msg: "user {{ansible_user}}"
 
 
     - name: Enable and start Docker services
