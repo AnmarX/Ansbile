@@ -30,7 +30,7 @@
     - name: download jdk
       get_url:
         url: https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
-        dest: "/opt/software/jdk-23_linux-x64_bin.deb"
+        dest: "/opt/software/"
         headers:
           Cookie: "oraclelicense=accept-securebackup-cookie"
         validate_certs: false
