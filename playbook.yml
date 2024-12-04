@@ -90,14 +90,14 @@
         state: present
 
 
-    - name: fix time
-      command: sudo hwclock --hctosys 
+    # - name: fix time
+    #   command: sudo hwclock --hctosys 
 
      #temp solution for time zone 
     - name: Update apt with specific options
       command:
         cmd: apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update
-        
+
   #Task 4: Add Docker repository
     - name: Add Docker repository
       apt_repository:
