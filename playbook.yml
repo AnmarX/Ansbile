@@ -29,12 +29,18 @@
     
   tasks:                                            # List of tasks to execute
 
+    - name: Update apt with specific options
+      command:
+        cmd: apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update
 
     - name: Update and upgrade all packages to the latest version
       apt:
         update_cache: true
         upgrade: dist
         cache_valid_time: 3600
+
+   
+
     
     # Task 2: Install Nginx
     - name: Install Nginx                           # Descriptive name for installing Nginx
@@ -87,6 +93,10 @@
     - name: fix time
       command: sudo hwclock --hctosys 
 
+     #temp solution for time zone 
+    - name: Update apt with specific options
+      command:
+        cmd: apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update
         
   #Task 4: Add Docker repository
     - name: Add Docker repository
@@ -106,7 +116,9 @@
 
   
 
-
+    - name: Update apt with specific options
+      command:
+        cmd: apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update
 
     # Task 5: Update apt package cache
     # sudo apt-get update
