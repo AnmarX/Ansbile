@@ -1,36 +1,11 @@
-# Add Docker's official GPG key:
-# sudo apt-get update
-# sudo apt-get install ca-certificates curl
-# sudo install -m 0755 -d /etc/apt/keyrings
-# sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-# sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-# # Add the repository to Apt sources:
-# echo \
-#   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-#   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-#   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-# sudo apt-get update
-
-
-# sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-
-
-#to check docer is running
-#sudo systemctl status docker
-
-
-- name: Install and configure Nginx on web servers  # Descriptive name for the playbook
-  hosts: webserver                                  # Target group of servers from the inventory
-  become: yes                                       # Use elevated privileges (e.g., sudo)
+- name: Install and configure Nginx on web servers
+  hosts: webserver
+  become: yes
   vars_files:
     - vars.yml
-    
-  tasks:                                            # List of tasks to execute
 
-    
-
+  tasks:
+    # Task 1: Update and upgrade all packages
     - name: Update and upgrade all packages to the latest version
       apt:
         update_cache: true
@@ -38,30 +13,27 @@
         cache_valid_time: 3600
       ignore_errors: yes
 
+    # Task 2: Update apt with specific options using `command`
     - name: Update apt with specific options
       command:
         cmd: apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update
+      ignore_errors: yes
 
-   
+    # Task 3: Install Nginx
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
 
-    
-    # Task 2: Install Nginx
-    - name: Install Nginx                           # Descriptive name for installing Nginx
-      apt:                                          # Use the apt module
-        name: nginx                                 # Specify the package name to install
-        state: present                              # Ensure the package is installed
+    # Task 4: Ensure Nginx is running and enabled
+    - name: Ensure Nginx is running and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: true
 
-    # Task 3: Start and enable the Nginx service
-    - name: Ensure Nginx is running and enabled     # Descriptive name for service management
-      service:                                      # Use the service module
-        name: nginx                                 # Target the Nginx service
-        state: started                              # Ensure the service is running
-        enabled: true  
-
-
-    # Task 1: Install prerequisite packages
-   
-    - name: Install prerequisite packages for docker
+    # Task 5: Install prerequisite packages for Docker
+    - name: Install prerequisite packages for Docker
       apt:
         name:
           - apt-transport-https
@@ -69,75 +41,40 @@
           - curl
           - gnupg
           - software-properties-common
-        # Ensure Existence for present
         state: present
 
-    # Task 2: Create directory for keyrings
+    # Task 6: Create directory for keyrings
     - name: Create directory for keyrings
       file:
         path: /etc/apt/keyrings
         state: directory
         mode: '0755'
 
-    # Task 3: Download Docker GPG key
-    # - name: Download Docker GPG key
-    #   get_url:
-    #     url: https://download.docker.com/linux/ubuntu/gpg
-    #     dest: /etc/apt/keyrings/docker.asc
-    #     mode: '0644'
-
+    # Task 7: Add Docker's official GPG key
     - name: Add Docker's official GPG key
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         keyring: /etc/apt/keyrings/docker.gpg
         state: present
 
-
-    - name: fix time
-      command: sudo hwclock --hctosys 
-
-
-  #Task 4: Add Docker repository
+    # Task 8: Add Docker repository
     - name: Add Docker repository
       apt_repository:
         repo: >-
-          deb [arch=amd64
-          signed-by=/etc/apt/keyrings/docker.gpg]
+          deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg]
           https://download.docker.com/linux/ubuntu jammy stable
         filename: docker
         state: present
       ignore_errors: yes
 
-
-    #temp solution for time zone 
-    - name: Update apt with specific options
-      command:
-        cmd: apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update
-
-    # - name: Add Docker repository
-    #   apt_repository:
-    #     repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu jammy stable"
-    #     filename: docker
-    #     state: present
-
-  
-
-    
-
-    # Task 5: Update apt package cache
-    # sudo apt-get update
+    # Task 9: Update apt cache again
     - name: Update apt package cache
       apt:
         update_cache: yes
         cache_valid_time: 3600
       ignore_errors: yes
-    
-    # - name: Update apt with specific options
-      command:
-        cmd: apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update
 
-    # Task 6: Install Docker Engine and related components
-    # sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    # Task 10: Install Docker Engine and related components
     - name: Install Docker Engine and related components
       apt:
         name:
@@ -148,18 +85,14 @@
           - docker-compose-plugin
         state: present
 
-
+    # Task 11: Add user to Docker group
     - name: Add user to Docker group
       user:
         name: "{{ ansible_user }}"
         groups: docker
         append: true
 
-    - name: Print user
-      debug:
-        msg: "user {{ansible_user}}"
-
-
+    # Task 12: Enable and start Docker services
     - name: Enable and start Docker services
       systemd:
         name: "{{ item }}"
@@ -168,11 +101,3 @@
       loop:
         - docker.service
         - containerd.service
-
-
-   
-
-
-
-
-
