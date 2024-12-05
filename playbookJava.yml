@@ -73,7 +73,7 @@
       file:
         path: /etc/profile.d/jdk.sh
         mode: '0755'
-        state: file
+        state: touch
 
     - name: Add JAVA_HOME and PATH to .sh file
       blockinfile:
