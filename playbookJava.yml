@@ -48,7 +48,55 @@
 
     
 
-    # - name: create directory to install the packages on
+      # you can do the below two tasks in one task using copy
+    - name: Add JAVA_HOME and PATH to .sh file using copy
+      copy:
+        dest: /etc/profile.d/jdk.sh
+        content: |
+          export JAVA_HOME=/usr/lib/jvm/jdk-xx
+          export PATH=$JAVA_HOME/bin:$PATH
+        owner: root
+        group: root
+        mode: '0755'
+
+
+    # - name: Make the file executable for every new session
+    #   file:
+    #     path: /etc/profile.d/jdk.sh
+    #     mode: '0755'
+    #     state: touch
+
+    # - name: Add JAVA_HOME and PATH to .sh file
+    #   blockinfile:
+    #     path: /etc/profile.d/jdk.sh
+    #     block: |
+    #       export JAVA_HOME=/usr/lib/jvm/jdk-xx
+    #       export PATH=$JAVA_HOME/bin:$PATH
+    #     state: present
+    
+   
+    
+    - name: Source the file for immediate effect
+      shell: source /etc/profile.d/jdk.sh
+      args:
+        executable: /bin/bash
+
+    - name: Check Java version
+      shell: java --version
+      register: java_version_output
+
+    - name: Print Java version to the console
+      debug:
+        msg: "{{ java_version_output.stdout }}"
+
+        
+
+
+
+
+
+
+   # - name: create directory to install the packages on
     #   file: 
     #     path: "/usr/lib/jvm"
     #     state: directory
@@ -68,34 +116,3 @@
     #     # The archive file (src) is already present on the target machine.
     #     # Ansible skips the copy step and directly extracts the file from the specified location on the target machine.
     #     remote_src: yes
-
-    - name: Make the file executable for every new session
-      file:
-        path: /etc/profile.d/jdk.sh
-        mode: '0755'
-        state: touch
-
-    - name: Add JAVA_HOME and PATH to .sh file
-      blockinfile:
-        path: /etc/profile.d/jdk.sh
-        block: |
-          export JAVA_HOME=/usr/lib/jvm/jdk-xx
-          export PATH=$JAVA_HOME/bin:$PATH
-        state: present
-    
-   
-    
-    - name: Source the file for immediate effect
-      shell: source /etc/profile.d/jdk.sh
-      args:
-        executable: /bin/bash
-
-    - name: Check Java version
-      shell: java --version
-      register: java_version_output
-
-    - name: Print Java version to the console
-      debug:
-        msg: "{{ java_version_output.stdout }}"
-
-        
