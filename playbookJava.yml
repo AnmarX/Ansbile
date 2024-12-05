@@ -69,6 +69,12 @@
     #     # Ansible skips the copy step and directly extracts the file from the specified location on the target machine.
     #     remote_src: yes
 
+    - name: Make the file executable for every new session
+      file:
+        path: /etc/profile.d/jdk.sh
+        mode: '0755'
+        state: file
+
     - name: Add JAVA_HOME and PATH to .sh file
       blockinfile:
         path: /etc/profile.d/jdk.sh
@@ -77,11 +83,7 @@
           export PATH=$JAVA_HOME/bin:$PATH
         state: present
     
-    - name: Make the file executable for every new session
-      file:
-        path: /etc/profile.d/jdk.sh
-        mode: '0755'
-        state: file
+   
     
     - name: Source the file for immediate effect
       shell: source /etc/profile.d/jdk.sh
