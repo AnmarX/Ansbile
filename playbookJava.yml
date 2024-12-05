@@ -42,25 +42,32 @@
         validate_certs: false
         checksum: "sha256:1db5362bab76800022cffb22bec4d6597975e34a53c834d8a4874b0b284491a4"
     
+    - name: Install JDK from .deb package
+      ansible.builtin.apt:
+        deb: /opt/software/jdk-21_linux-x64_bin.deb
 
-    - name: create directory to install the packages on
-      file: 
-        path: "/usr/lib/jvm"
-        state: directory
-        mode: '0755'
     
-    - name: Extract JDK tarball
-      unarchive:
-        src: /opt/software/jdk-21_linux-x64_bin.deb
-        dest: /usr/lib/jvm
-        # remote_src: no (Default):
-        # The archive file (src) is local to the control node or fetched from a URL.
-        # Ansible will copy the file from the control node to the target machine before extracting it.
 
-        # remote_src: yes:
-        # The archive file (src) is already present on the target machine.
-        # Ansible skips the copy step and directly extracts the file from the specified location on the target machine.
-        remote_src: yes
+    # - name: create directory to install the packages on
+    #   file: 
+    #     path: "/usr/lib/jvm"
+    #     state: directory
+    #     mode: '0755'
+    
+    # - name: Extract JDK tarball
+    #### File Format: The .deb file is not a compressed archive like
+    ####  .tar.gz or .zip. It’s a Debian package file meant for installation, not extraction. 
+    #    unarchive:
+    #     src: /opt/software/jdk-21_linux-x64_bin.deb
+    #     dest: /usr/lib/jvm
+    #     # remote_src: no (Default):
+    #     # The archive file (src) is local to the control node or fetched from a URL.
+    #     # Ansible will copy the file from the control node to the target machine before extracting it.
+
+    #     # remote_src: yes:
+    #     # The archive file (src) is already present on the target machine.
+    #     # Ansible skips the copy step and directly extracts the file from the specified location on the target machine.
+    #     remote_src: yes
 
     - name: Add JAVA_HOME and PATH to .sh file
       blockinfile:
