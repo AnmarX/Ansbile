@@ -29,7 +29,9 @@
     - name: Ensure Nginx is running and enabled
       service:
         name: nginx
+        # Ensures the nginx service is in the started (running) state
         state: started
+        # Ensures the nginx service is enabled to start automatically at boot time.
         enabled: true
 
     # Task 5: Install prerequisite packages for Docker
