@@ -4,6 +4,8 @@
   vars_files:
     - vars.yml
 
+# to check docker is running
+# systemctl status docker
   tasks:
     # Task 1: Update and upgrade all packages
     - name: Update and upgrade all packages to the latest version
