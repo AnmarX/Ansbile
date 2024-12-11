@@ -74,11 +74,19 @@
     #       export PATH=$JAVA_HOME/bin:$PATH
     #     state: present
     
-   
-    
+
+      # Why Use source?
+      # When a script like /etc/profile.d/jdk.sh modifies environment variables,
+      # those changes don’t take effect in the current session unless you:
+
+      # Restart the shell or system.
+      # Use the source command to load the changes immediately.
     - name: Source the file for immediate effect
       shell: source /etc/profile.d/jdk.sh
       args:
+      # Exactly! The args.executable: /bin/bash in your Ansible task specifies that the command should be 
+      # executed using the Bash shell (/bin/bash) rather than the default shell, 
+      # which is often /bin/sh on many systems.
         executable: /bin/bash
 
     - name: Check Java version
