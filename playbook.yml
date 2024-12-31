@@ -1,5 +1,5 @@
 - name: Install and configure Nginx on web servers
-  hosts: webserver
+  hosts: all
   become: yes
   vars_files:
     - vars.yml
@@ -109,3 +109,43 @@
       loop:
         - docker.service
         - containerd.service
+    
+    - name: Add Kubernetes GPG key
+      apt_key:
+        url: https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key
+        keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+        state: present
+
+    # Task 3: Add Kubernetes repository
+    - name: Add Kubernetes repository
+      apt_repository:
+        repo: >-
+          deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg]
+          https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /
+        filename: kubernetes
+        state: present
+
+    # Task 4: Ensure correct permissions for the keyring
+    - name: Set permissions for Kubernetes keyring
+      file:
+        path: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+        mode: '0644'
+
+    # Task 5: Ensure correct permissions for the repository file
+    # - name: Set permissions for Kubernetes sources list
+    #   ansible.builtin.file:
+    #     path: /etc/apt/sources.list.d/kubernetes.list
+    #     mode: '0644'
+
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      ignore_errors: yes
+
+    - name: Install kubectl
+      apt:
+        name: kubectl
+        state: present
+
+    

@@ -43,6 +43,8 @@ git status
 
 git add <filename>
 git commit -m "<Comment>"
-git push origin main
 
 git remote set-url origin https://<token>@github.com/<username>/<repo>
+
+git push origin main
+
