@@ -126,16 +126,16 @@
         state: present
 
     # Task 4: Ensure correct permissions for the keyring
-    - name: Set permissions for Kubernetes keyring
-      file:
-        path: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-        mode: '0644'
+    # - name: Set permissions for Kubernetes keyring
+    #   file:
+    #     path: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    #     mode: '0644'
 
     # Task 5: Ensure correct permissions for the repository file
-    # - name: Set permissions for Kubernetes sources list
-    #   ansible.builtin.file:
-    #     path: /etc/apt/sources.list.d/kubernetes.list
-    #     mode: '0644'
+    - name: Set permissions for Kubernetes sources list
+      file:
+        path: /etc/apt/sources.list.d/kubernetes.list
+        mode: '0644'
 
     - name: Update apt package cache
       apt:
