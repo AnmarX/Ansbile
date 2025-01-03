@@ -4,8 +4,8 @@
   vars_files:
     - vars.yml
 
-# to check docker is running
-# systemctl status docker
+  # to check docker is running
+  # systemctl status docker
   tasks:
     # Task 1: Update and upgrade all packages
     - name: Update and upgrade all packages to the latest version
@@ -52,7 +52,7 @@
       file:
         path: /etc/apt/keyrings
         state: directory
-        mode: '0755'
+        mode: "0755"
 
     # Task 7: Add Docker's official GPG key
     - name: Add Docker's official GPG key
@@ -95,7 +95,7 @@
         name: "{{ ansible_user }}"
         groups: docker
         append: true
-    
+
     - name: Print architecture variables
       debug:
         msg: "user {{ansible_user}}"
@@ -109,7 +109,7 @@
       loop:
         - docker.service
         - containerd.service
-    
+
     - name: Add Kubernetes GPG key
       apt_key:
         url: https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key
@@ -132,10 +132,10 @@
     #     mode: '0644'
 
     # Task 5: Ensure correct permissions for the repository file
-    - name: Set permissions for Kubernetes sources list
-      file:
-        path: /etc/apt/sources.list.d/kubernetes.list
-        mode: '0644'
+    # - name: Set permissions for Kubernetes sources list
+    #   file:
+    #     path: /etc/apt/sources.list.d/kubernetes.list
+    #     mode: '0644'
 
     - name: Update apt package cache
       apt:
@@ -147,5 +147,3 @@
       apt:
         name: kubectl
         state: present
-
-    
