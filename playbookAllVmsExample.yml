@@ -1,0 +1,15 @@
+- name: Tasks for the controller and remote hosts
+  tasks:
+    - name: Download file on the controller
+      hosts: local
+      tasks:
+        - name: Download file
+          ansible.builtin.get_url:
+            url: https://example.com/file.tar.gz
+            dest: /tmp/file.tar.gz
+
+    - name: Tasks for remote hosts
+      hosts: all
+      tasks:
+        - name: Example task for remote hosts
+          ansible.builtin.shell: echo "Task for remote host"

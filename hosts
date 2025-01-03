@@ -8,3 +8,12 @@
 
 [dbserver]
 192.168.56.104 ansible_user=guest2 ansible_ssh_private_key_file=~/.ssh/id_rsa
+
+[local]
+localhost ansible_connection=local
+
+
+# [all:children]
+# webservice
+# db
+# local
